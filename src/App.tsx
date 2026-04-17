@@ -102,7 +102,13 @@ Business: ${formData.businessName}
 Phone: ${formData.phone}`; // [cite: 147]
 
       // 3. Trigger Redirect
-      window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`; // 
+      const redirectUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+if ((window as any).gtag_report_conversion) {
+  (window as any).gtag_report_conversion(redirectUrl);
+} else {
+  window.location.href = redirectUrl;
+} 
 
     } catch (error) {
       console.error('Submission Error:', error);
